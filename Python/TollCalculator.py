@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-import holidays
 import sys
+import holidays
 
-def get_toll_fee_for_entry(vehicle: str, date: datetime):
+def get_toll_fee_for_entry(vehicle: str, date: datetime) -> int:
     toll_fee_for_entry = 0
     if vehicle in ["motorbike", "tractor", "emergency", "diplomat", "foreign", "military"]:
         print(f"[DEBUG] vehicle is toll free: {vehicle}")
@@ -19,7 +19,7 @@ def get_toll_fee_for_entry(vehicle: str, date: datetime):
     toll_fee_for_entry = get_period_toll_fee(date)
     return toll_fee_for_entry
 
-def get_period_toll_fee(date: datetime):
+def get_period_toll_fee(date: datetime) -> int:
     period_toll_fee = 0
     if date.hour == 6 and date.minute >= 0 and date.minute <= 29:
         print("[DEBUG] 06:00 => 06:29 tollfee: 8")
@@ -57,7 +57,6 @@ def get_period_toll_fee(date: datetime):
     return period_toll_fee
 
 if __name__ == "__main__":
-    total_fee = 0
     try:
         with open(sys.argv[1]) as file:
             vehicle_entries = file.readlines()
@@ -69,14 +68,15 @@ if __name__ == "__main__":
     print(f"[DEBUG] first hour_period_start: {hour_period_start}")
     hour_period = hour_period_start + timedelta(hours=1)
     print(f"[DEBUG] first hour_period: {hour_period}")
-
     last_toll_fee = 0
+    total_fee = 0
+
     for vehicle_entry in vehicle_entries:
         vehicle_entry = vehicle_entry.strip()
-        entry_vehicle = vehicle_entry.split(',')[0]
+        entry_vehicle_type = vehicle_entry.split(',')[0]
         entry_date = datetime.strptime(vehicle_entry.split(',')[1], '%Y-%m-%dT%H:%M:%S')
-        print(f"[DEBUG] vehicle: {entry_vehicle}, time: {entry_date}")
-        toll_fee = get_toll_fee_for_entry(entry_vehicle, entry_date)
+        print(f"[DEBUG] vehicle: {entry_vehicle_type}, time: {entry_date}")
+        toll_fee = get_toll_fee_for_entry(entry_vehicle_type, entry_date)
         print(f"[DEBUG] tollfee for entry: {toll_fee}")
         if entry_date < hour_period:
             print("[DEBUG] entry is within hour period")
@@ -99,4 +99,3 @@ if __name__ == "__main__":
         print(f"[DEBUG] Total toll fee is higher than 60 sek: {total_fee}")
         total_fee = 60
     print(f"Total toll fee: {total_fee}")
-
