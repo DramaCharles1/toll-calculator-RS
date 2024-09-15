@@ -7,17 +7,20 @@ class TollCalculator:
         self.dates_and_fees = {}
         with open(dataset) as file:
             vehicle_entries = file.readlines()
-        
-        hour_period_start = datetime.strptime(vehicle_entries[0].strip().split(',')[1], '%Y-%m-%dT%H:%M:%S')
-        print(f"[DEBUG] first hour_period_start: {hour_period_start}")
-        hour_period = hour_period_start + timedelta(hours=1)
-        print(f"[DEBUG] first hour_period: {hour_period}")
+
+        hour_period_start = None
+        hour_period = None
         last_toll_fee = 0
 
         for vehicle_entry in vehicle_entries:
             vehicle_entry = vehicle_entry.strip()
             entry_vehicle_type = vehicle_entry.split(',')[0]
             entry_date = datetime.strptime(vehicle_entry.split(',')[1], '%Y-%m-%dT%H:%M:%S')
+            if hour_period_start is None:
+                hour_period_start = entry_date
+                print(f"[DEBUG] first hour_period_start: {hour_period_start}")
+                hour_period = hour_period_start + timedelta(hours=1)
+                print(f"[DEBUG] first hour_period: {hour_period}")
             if not entry_date.date() in self.dates_and_fees:
                 self.dates_and_fees[entry_date.date()] = 0
             print(f"[DEBUG] vehicle: {entry_vehicle_type}, time: {entry_date}")
