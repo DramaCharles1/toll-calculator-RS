@@ -3,6 +3,9 @@ import sys
 import holidays
 
 class TollCalculator:
+    """
+    TollCalculator class that calculates toll fees and holds information for different dates.
+    """
     def __init__(self, dataset):
         self.dates_and_fees = {}
         with open(dataset) as file:
@@ -52,6 +55,9 @@ class TollCalculator:
             print("---------------")
 
     def get_toll_fee_for_entry(self, vehicle: str, date: datetime) -> int:
+        """
+        Calculate toll fee for one entry.
+        """
         toll_fee_for_entry = 0
         if vehicle in ["motorbike", "tractor", "emergency", "diplomat", "foreign", "military"]:
             print(f"[DEBUG] vehicle is toll free: {vehicle}")
@@ -67,8 +73,11 @@ class TollCalculator:
             return 0
         toll_fee_for_entry = self.get_period_toll_fee(date)
         return toll_fee_for_entry
-        
+
     def get_period_toll_fee(self, date: datetime) -> int:
+        """
+        Get toll fee based on time of day.
+        """
         period_toll_fee = 0
         if date.hour == 6 and date.minute <= 29:
             print("[DEBUG] 06:00 => 06:29 tollfee: 8")
