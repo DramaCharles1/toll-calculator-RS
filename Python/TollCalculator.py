@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import holidays
+import sys
 
 def get_toll_fee_for_entry(vehicle: str, date: datetime):
     toll_fee_for_entry = 0
@@ -57,8 +58,12 @@ def get_period_toll_fee(date: datetime):
 
 if __name__ == "__main__":
     total_fee = 0
-    with open("dataset_car") as file:
-        vehicle_entries = file.readlines()
+    try:
+        with open(sys.argv[1]) as file:
+            vehicle_entries = file.readlines()
+    except IndexError as e:
+        print("No dataset added")
+        sys.exit()
 
     hour_period_start = datetime.strptime(vehicle_entries[0].strip().split(',')[1], '%Y-%m-%dT%H:%M:%S')
     print(f"[DEBUG] first hour_period_start: {hour_period_start}")
