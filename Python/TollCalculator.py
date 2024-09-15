@@ -8,11 +8,16 @@ class TollCalculator:
         with open(dataset) as file:
             vehicle_entries = file.readlines()
 
+        def sort_entries(date: str):
+            return datetime.strptime(date.strip().split(',')[1], '%Y-%m-%dT%H:%M:%S')
+
+        vehicle_entries_sorted = sorted(vehicle_entries, key=sort_entries)
+
         hour_period_start = None
         hour_period = None
         last_toll_fee = 0
 
-        for vehicle_entry in vehicle_entries:
+        for vehicle_entry in vehicle_entries_sorted:
             vehicle_entry = vehicle_entry.strip()
             entry_vehicle_type = vehicle_entry.split(',')[0]
             entry_date = datetime.strptime(vehicle_entry.split(',')[1], '%Y-%m-%dT%H:%M:%S')
