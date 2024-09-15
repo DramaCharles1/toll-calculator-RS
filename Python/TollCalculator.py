@@ -21,39 +21,39 @@ def get_toll_fee_for_entry(vehicle: str, date: datetime) -> int:
 
 def get_period_toll_fee(date: datetime) -> int:
     period_toll_fee = 0
-    if date.hour == 6 and date.minute >= 0 and date.minute <= 29:
+    if date.hour == 6 and date.minute <= 29:
         print("[DEBUG] 06:00 => 06:29 tollfee: 8")
-        period_toll_fee += 8
-    elif date.hour == 6 and date.minute >= 30 and date.minute <= 59:
+        period_toll_fee = 8
+    elif date.hour == 6 and date.minute >= 30:
         print("[DEBUG] 06:30 => 06:59 tollfee: 13")
-        period_toll_fee += 13
-    elif date.hour == 7 and date.minute >= 0 and date.minute <= 59:
+        period_toll_fee = 13
+    elif date.hour == 7:
         print("[DEBUG] 07:00 => 07:59 tollfee: 18")
-        period_toll_fee += 18
-    elif date.hour == 8 and date.minute >= 0 and date.minute <= 29:
+        period_toll_fee = 18
+    elif date.hour == 8 and date.minute <= 29:
         print("[DEBUG] 08:00 => 08:29 tollfee: 13")
-        period_toll_fee += 13
-    elif date.hour == 8 and date.minute >= 30 and date.minute <= 59:
+        period_toll_fee = 13
+    elif date.hour == 8 and date.minute >= 30:
         print("[DEBUG] 08:30 => 08:59 tollfee: 8")
-        period_toll_fee += 8
+        period_toll_fee = 8
     elif date.hour >=9 and date.hour <= 14:
         print("[DEBUG] 09:00 => 14:59 tollfee: 8")
-        period_toll_fee += 8
-    elif date.hour == 15 and date.minute >= 0 and date.minute <= 29:
+        period_toll_fee = 8
+    elif date.hour == 15 and date.minute <= 29:
         print("[DEBUG] 15:00 => 15:29 tollfee: 13")
-        period_toll_fee += 13
-    elif date.hour == 15 and date.minute >= 30 and date.minute <= 59:
+        period_toll_fee = 13
+    elif date.hour == 15 and date.minute >= 30:
         print("[DEBUG] 15:30 => 15:59 tollfee: 18")
-        period_toll_fee += 18
+        period_toll_fee = 18
     elif date.hour == 16:
         print("[DEBUG] 16:00 => 16:59 tollfee: 18")
-        period_toll_fee += 18
+        period_toll_fee = 18
     elif date.hour == 17:
         print("[DEBUG] 17:00 => 17:59 tollfee: 13")
-        period_toll_fee += 13
-    elif date.hour == 18 and date.minute >= 0 and date.minute <= 29:
+        period_toll_fee = 13
+    elif date.hour == 18 and date.minute <= 29:
         print("[DEBUG] 18:00 => 18:29 tollfee: 8")
-        period_toll_fee += 8
+        period_toll_fee = 8
     return period_toll_fee
 
 if __name__ == "__main__":
